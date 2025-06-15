@@ -27,7 +27,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>お散歩アプリ</Text>
+      <Text style={styles.title}>散歩を記録する</Text>
 
       {errorMsg && <Text style={styles.error}>{errorMsg}</Text>}
 

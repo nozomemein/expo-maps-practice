@@ -19,13 +19,14 @@ export default function RootLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: "お散歩アプリ",
+          title: "",
         }}
       />
       <Stack.Screen
         name="walk"
         options={{
-          headerTitle: "散歩の詳細",
+          headerTitle: "",
+          headerBackTitle: "戻る"
         }}
       />
     </Stack>

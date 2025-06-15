@@ -1,6 +1,13 @@
+import { AppleMaps, GoogleMaps } from "expo-maps";
 import { useLocalSearchParams } from "expo-router";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-// import MapView, { Marker, Polyline } from "react-native-maps";
+import {
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 // モックデータ
 const mockWalks = [
@@ -134,6 +141,66 @@ export default function WalkDetailScreen() {
   const startLocation = coordinates[0];
   const endLocation = coordinates[coordinates.length - 1];
 
+  const renderMap = () => {
+    if (Platform.OS === "ios") {
+      return (
+        <AppleMaps.View
+          style={styles.map}
+          cameraPosition={{
+            coordinates: startLocation,
+            zoom: 15,
+          }}
+          polylines={[
+            {
+              coordinates,
+              color: "#000",
+              width: 3,
+            },
+          ]}
+          markers={[
+            {
+              coordinates: startLocation,
+              title: "開始地点",
+              tintColor: "green",
+            },
+            {
+              coordinates: endLocation,
+              title: "終了地点",
+              tintColor: "red",
+            },
+          ]}
+        />
+      );
+    } else {
+      return (
+        <GoogleMaps.View
+          style={styles.map}
+          cameraPosition={{
+            coordinates: startLocation,
+            zoom: 15,
+          }}
+          polylines={[
+            {
+              coordinates,
+              color: "#000",
+              width: 3,
+            },
+          ]}
+          markers={[
+            {
+              coordinates: startLocation,
+              title: "開始地点",
+            },
+            {
+              coordinates: endLocation,
+              title: "終了地点",
+            },
+          ]}
+        />
+      );
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>{walk.name}</Text>
@@ -141,29 +208,7 @@ export default function WalkDetailScreen() {
         {new Date(walk.startTime).toLocaleString()}
       </Text>
 
-      <View style={styles.mapContainer}>
-        {/* <MapView
-          style={styles.map}
-          initialRegion={{
-            latitude: startLocation.latitude,
-            longitude: startLocation.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-          }}
-        >
-          <Polyline
-            coordinates={coordinates}
-            strokeColor="#000"
-            strokeWidth={3}
-          />
-          <Marker
-            coordinate={startLocation}
-            title="開始地点"
-            pinColor="green"
-          />
-          <Marker coordinate={endLocation} title="終了地点" pinColor="red" />
-        </MapView> */}
-      </View>
+      <View style={styles.mapContainer}>{renderMap()}</View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>写真</Text>
