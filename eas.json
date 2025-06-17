@@ -1,6 +1,7 @@
 {
   "build": {
     "development": {
+      "environment": "development",
       "ios": {
         "simulator": true
       }

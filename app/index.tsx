@@ -1,3 +1,4 @@
+import "expo-dev-client";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
